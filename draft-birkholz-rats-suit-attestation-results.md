@@ -45,7 +45,7 @@ informative:
 
 The IETF Remote Attestation Procedures (RATS) architecture defines Conceptual Messages as input and output of the appraisal process that assesses the trustworthiness of remote peers: Evidence and Attestation Results.
 Based on the Trustworthiness Vectors defined in Trusted Path Routing, this document defines a core set of Claims to be used in Evidence and Attestation Results for the Software Update for the Internet of Things (SUIT) Workflow Model.
-Consecutively, this document is in support of the Trusted Execution Environment Provisioning (TEEP) architecture, which defines the assessment of remote peers via RATS and uses SUIT for evidence generation and as a remediation measure to improve trustworthiness of given remote peers. 
+Consecutively, this document is in support of the Trusted Execution Environment Provisioning (TEEP) architecture, which defines the assessment of remote peers via RATS and uses SUIT for evidence generation as well as a remediation measure to improve trustworthiness of given remote peers. 
 
 --- middle
 
@@ -86,7 +86,8 @@ The aggregated sequence of all Records is composed into a Report.
 
 This document specifies new Claims derived from Command Sequence Reports and highlights existing Claims as defined in Trusted Path Routing {{-tpr}} that are applicable to the operational state of installed and updated software.
 
-The Claims defined in this document are in support of the Trusted Execution Environment Provisioning (TEEP) architecture. During TEEP, the current operational state of an Attester is assessed via RATS. If the corresponding Attestation Results -- as covered in this document -- indicate insufficient Trustworthiness Levels with respect to installed software, the SUIT Workflow Model is used for remediation.
+The Claims defined in this document are in support of the Trusted Execution Environment Provisioning (TEEP) architecture.
+During TEEP, the current operational state of an Attester is assessed via RATS. If the corresponding Attestation Results -- as covered in this document -- indicate insufficient Trustworthiness Levels with respect to installed software, the SUIT Workflow Model is used for remediation.
 
 ## Terminology
 
@@ -96,6 +97,67 @@ This document uses the terms and concepts defined in {{-rats}}, {{-suit}}, and {
 
 # Trustworthiness Vectors
 
-While there are usage scenarios where Attestation Results can be a binary decisions, more often than not the assessment of trustworthiness is a fine grained spectrum or based on multiple factors. These shades of Attestation Results are captured by the definition of Trustworthiness Vectors in Trusted Path Routing {{-tpr}}. Trustworthiness Vectors are sets of Claims representing appraisal outputs created by a Verifier. Each of these Claims is called a Trustworthiness Level. Multiple Trustworthiness Level are composed into a vector.
+While there are usage scenarios where Attestation Results can be binary decisions, more often than not the assessment of trustworthiness is represented by a more fine-grained spectrum or based on multiple factors. These shades of Attestation Results are captured by the definition of Trustworthiness Vectors in Trusted Path Routing {{-tpr}}. Trustworthiness Vectors are sets of Claims representing appraisal outputs created by a Verifier. Each of these Claims is called a Trustworthiness Level. Multiple Trustworthiness Levels are composed into a vector.
+
+An Attester processing SUIT Manifests can create three types of Claims about its Target Environments. This includes Claims about:
+
+* installed manifests including initial state (e.g. factory default),
+* hardware component identifiers that represent the targets of updates, and
+* SUIT Interpreter results (e.g. test-failed) created during updates.
+
+Every SUIT Manifest maps to a certain intended state of a device. Every intended device composition of software components associated with hardware components can therefore be expressed based on a SUIT Manifest. The current operational state of a device can be represented in the same form, including the initial state.
+
+As a result, the Claims defined in this document are bundled by the scope of the information represented in SUIT Manifests, i.e., dedicated blobs of software that are the payload of a SUIT Manifest. All Claims associated with an identifiable SUIT Manifest must always be bundled together in a Claims set that is limited to the Claims defined in this document.
+
+# SUIT Claims
+
+~~~~CDDL
+suit-results = (
+  hardware-components = [ + $hardware-component-claims ],
+  software-components = [ + $software-component-claims ],
+  interpreter-results = [ + $interpreter-results ],
+)
+~~~~
+
+## Hardware Component Claims
+
+### component-name
+
+----CDDL
+$hardware-component-claims /= component-name
+
+
+
+### component-index
+
+## Software Component Claims
+
+## Interpreter Claims
+
+This class of Claims is intended to be included in Evidence. Interpreter Claims appraised by a Verifier can steer a corresponding Firmware Appraisal that consumes this Evidence.
+
+### test-failed
+
+### unsupported-command
+
+### unsupported-parameter
+
+### unsupported-component-id
+
+### payload-unavailable
+
+### dependency-unavailable
+
+### critical-application-failure
+
+### watchdog-timeout
+
+
+
+
+
+
+
+
 
 --- back
