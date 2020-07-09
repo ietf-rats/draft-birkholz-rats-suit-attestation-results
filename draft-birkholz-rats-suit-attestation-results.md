@@ -273,47 +273,40 @@ $$interpreter-record-claim //= ( actual-parameters => parameter-list )
 
 ## Generic Record Conditions (TBD)
 
-### test-failed
-
-### unsupported-command
-
-### unsupported-parameter
-
-### unsupported-component-id
-
-### payload-unavailable
-
-### dependency-unavailable
-
-### critical-application-failure
-
-### watchdog-timeout
+* test-failed
+* unsupported-command
+* unsupported-parameter
+* unsupported-component-id
+* payload-unavailable
+* dependency-unavailable
+* critical-application-failure
+* watchdog-timeout
 
 # List of Commands (TBD)
 
-Check Vendor Identifier
-Check Class Identifier
-Verify Image
-Set Component Index
-Override Parameters
-Set Dependency Index
-Set Parameters
-Process Dependency
-Run
-Fetch
-Use Before
-Check Component Offset
-Check Device Identifier
-Check Image Not Match
-Check Minimum Battery
-Check Update Authorized
-Check Version
-Abort
-Try Each
-Copy
-Swap
-Wait For Event
-Run Sequence
-Run with Arguments
+* Check Vendor Identifier
+* Check Class Identifier
+* Verify Image
+* Set Component Index
+* Override Parameters
+* Set Dependency Index
+* Set Parameters
+* Process Dependency
+* Run
+* Fetch
+* Use Before
+* Check Component Offset
+* Check Device Identifier
+* Check Image Not Match
+* Check Minimum Battery
+* Check Update Authorized
+* Check Version
+* Abort
+* Try Each
+* Copy
+* Swap
+* Wait For Event
+* Run Sequence
+* Run with Arguments
 
 --- back
