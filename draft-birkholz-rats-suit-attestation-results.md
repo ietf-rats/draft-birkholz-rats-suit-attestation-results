@@ -249,7 +249,7 @@ $$interpreter-record-claim //= ( dependency-index => digest )
 
 ### command-index
 
-A positive integer representing an entry in a SUIT_Command_Sequence identifying a Command encoded as a SUIT Manifest Directive.
+A positive integer representing an entry in a SUIT_Command_Sequence identifying a Command encoded as a SUIT Manifest Directive or SUIT Manifest Condition.
 
 ~~~~CDDL
 $$interpreter-record-claim //= ( command-index => uint )
