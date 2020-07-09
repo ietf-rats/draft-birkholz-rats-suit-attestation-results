@@ -158,66 +158,66 @@ Correspondingly, the Claim definitions below highlight if a Claim is generic or 
 
 A RFC 4122 UUID representing the vendor of the Attester or one of its hardware and/or software components.
 
-----CDDL
+~~~~CDDL
 $$system-property-claim //= ( vendor-identifier => RFC4122_UUID )
-----
+~~~~
 
 ### class-identifier
 
 A RFC 4122 UUID representing the class of the Attester or one of its hardware and/or software components.
 
-----CDDL
+~~~~CDDL
 $$system-property-claim //= ( class-identifier => RFC4122_UUID )
-----
+~~~~
 
 ### device-identifier
 
 A RFC 4122 UUID representing the Attester.
 
-----CDDL
+~~~~CDDL
 $$system-property-claim //= ( device-identifier => RFC4122_UUID )
-----
+~~~~
 
 ### component-identifier
 
 A sequence of binary identifiers that is intended to identify a software-component of an Attester uniquely. A binary identifier can represent a CoSWID {{-coswid}} tag-id.
 
-----CDDL
+~~~~CDDL
 $$system-property-claim //=  ( class-identifier => [ + identifier ] )
-----
+~~~~
 
 ### image-digest
 
 A fingerprint computed over a software component image on the Attester.
 This Claim is always bundled with a component-identifier or component-index.
 
-----CDDL
+~~~~CDDL
 $$system-property-claim //= ( image-digest => digest )
-----
+~~~~
 
 ### image-size
 
 The size of a firmware image on the Attester.
 
-----CDDL
+~~~~CDDL
 $$system-property-claim //= ( image-size => size )
-----
+~~~~
 
 ### minimum-battery
 
 The configured minimum battery level of the Attester in mWh.
 
-----CDDL
+~~~~CDDL
 $$system-property-claim //= ( minimum-battery => charge )
-----
+~~~~
 
 ### version
 
 The Version of a hardware or software component of the Attester.
 
-----CDDL
+~~~~CDDL
 $$system-property-claim //= ( version => version-value )
-----
+~~~~
 
 ## Interpreter Record Claims
 
@@ -238,49 +238,49 @@ suit-record = {
 
 The result of a Command that was executed by the Interpreter on an Attester.
 
-----CDDL
+~~~~CDDL
 $$interpreter-record-claim //= ( record-success => bool )
-----
+~~~~
 
 ### component-index
 
 A positive integer representing an entry in a flat list of indices mapped to software component identifiers to be updated.
 
-----CDDL
+~~~~CDDL
 $$system-property-claim //= ( component-index => uint )
-----
+~~~~
 
 ### dependency-index
 
 A thumbprint of a software component that an update depends on.
 
-----CDDL
+~~~~CDDL
 $$interpreter-record-claim //= ( dependency-index => digest )
-----
+~~~~
 
 ### command-index
 
 A positive integer representing an entry in a SUIT_Command_Sequence identifying a Command encoded as a SUIT Manifest Directive.
 
-----CDDL
+~~~~CDDL
 $$interpreter-record-claim //= ( command-index => uint )
-----
+~~~~
 
 ### nominal-parameters
 
 A list of SUIT_Parameters associated with a specific Command encoded as a SUIT Manifest Directive.
 
-----CDDL
+~~~~CDDL
 $$interpreter-record-claim //= ( nominal-parameters => parameter-list )
-----
+~~~~
 
 ### nominal-parameters
 
 A list of SUIT_Parameters associated with a specific Command that was executed by the Interpreter on an Attester.
 
-----CDDL
+~~~~CDDL
 $$interpreter-record-claim //= ( actual-parameters => parameter-list )
-----
+~~~~
 
 ## Generic Record Conditions (TBD)
 
