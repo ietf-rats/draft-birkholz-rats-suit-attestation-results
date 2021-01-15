@@ -204,9 +204,9 @@ The size of a firmware image on the Attester. This Claim MUST be bundled with a 
 $$system-property-claim //= ( image-size => size )
 ~~~~
 
-### minimum-battery
+### low-battery
 
-The configured minimum battery level of the Attester in mWh.
+The current battery level of the Attester in mWh in case it was insufficient to conduct a SUIT Workflow. If there are multiple batteries this Claim SHOULD be bundled with a component-identifier.
 
 ~~~~CDDL
 $$system-property-claim //= ( minimum-battery => charge )
