@@ -184,13 +184,13 @@ $$system-property-claim //= ( device-identifier => RFC4122_UUID )
 A sequence of binary identifiers that is intended to identify a software-component of an Attester uniquely. A binary identifier can represent a CoSWID {{-coswid}} tag-id.
 
 ~~~~CDDL
-$$system-property-claim //=  ( component-identifier => [ + identifier ] )
+$$system-property-claim //= ( component-identifier => [ + identifier ] )
 ~~~~
 
 ### image-digest
 
 A fingerprint computed over a software component image on the Attester.
-This Claim is always bundled with a component-identifier or component-index.
+This Claim MUST always bundled with a component-identifier or component-index.
 
 ~~~~CDDL
 $$system-property-claim //= ( image-digest => digest )
@@ -232,20 +232,12 @@ The result of a Command that was executed by the Interpreter on an Attester.
 $$interpreter-record-claim //= ( record-success => bool )
 ~~~~
 
-### component-index
+### dependency-digest
 
-A positive integer representing an entry in a flat list of indices mapped to software component identifiers to be updated.
-
-~~~~CDDL
-$$system-property-claim //= ( component-index => uint )
-~~~~
-
-### dependency-index
-
-A thumbprint of a software component that an update depends on.
+A digest of a software component that an update depends on.
 
 ~~~~CDDL
-$$interpreter-record-claim //= ( dependency-index => digest )
+$$interpreter-record-claim //= ( dependency-digest => digest )
 ~~~~
 
 ### command-index
@@ -264,7 +256,7 @@ A list of SUIT_Parameters associated with a specific Command encoded as a SUIT M
 $$interpreter-record-claim //= ( nominal-parameters => parameter-list )
 ~~~~
 
-### nominal-parameters
+### actual-parameters
 
 A list of SUIT_Parameters associated with a specific Command that was executed by the Interpreter on an Attester.
 
