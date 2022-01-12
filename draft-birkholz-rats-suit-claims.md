@@ -130,7 +130,7 @@ SUIT Claims are differentiated in:
 * reports about updates and their SUIT Commands (SUIT Records).
 * success/failure reports
 
-Both types of Claims are always bundled in dedicated Claim Sets.
+Each type of Claims is always bundled in a dedicated Claim Set.
 Implementations can encode this information in various different ways (data models), e.g., sets, sequences, or nested structures.
 
 The SUIT Report is defined in {{-suit-report}}. It is used verbatim in this draft.
@@ -230,14 +230,6 @@ A positive integer representing an entry in a SUIT_Command_Sequence identifying 
 
 ~~~~CDDL
 $$interpreter-record-claim //= ( command-index => uint )
-~~~~
-
-### nominal-parameters
-
-A list of SUIT_Parameters associated with a specific Command encoded as a SUIT Manifest Directive.
-
-~~~~CDDL
-$$interpreter-record-claim //= ( nominal-parameters => parameter-list )
 ~~~~
 
 ### nominal-parameters
