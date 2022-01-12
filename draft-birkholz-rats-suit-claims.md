@@ -1,7 +1,7 @@
 ---
 title: Trustworthiness Vectors for the Software Updates of Internet of Things (SUIT) Workflow Model
-abbrev: SUIT TV
-docname: draft-birkholz-rats-suit-attestation-results-latest
+abbrev: SUIT Trustworthiness Vectos
+docname: draft-birkholz-rats-suit-claims-00
 category: std
 
 ipr: trust200902
