@@ -1,7 +1,7 @@
 ---
 title: Trustworthiness Vectors for the Software Updates of Internet of Things (SUIT) Workflow Model
 abbrev: SUIT TV
-docname: draft-birkholz-rats-suit-claims-02
+docname: draft-birkholz-rats-suit-claims-03
 category: std
 
 ipr: trust200902
@@ -38,8 +38,9 @@ normative:
 informative:
   I-D.ietf-rats-architecture: rats
   I-D.ietf-suit-manifest: suit
+  I-D.ietf-suit-report: suit-report
   I-D.ietf-teep-architecture: teep
-  I-D.voit-rats-trusted-path-routing: tpr
+  I-D.ietf-rats-ar4si: ar4si
   I-D.ietf-rats-eat: eat
   I-D.ietf-sacm-coswid: coswid
 
@@ -87,63 +88,58 @@ The type and sequence of stages are defined by the Command Sequences included in
 For each stage in which a Command from the Command Sequence is executed a Record is created. All Records of a SUIT procedure contain binary results limited to "fail" or "pass".
 The aggregated sequence of all Records is composed into a Report.
 
-This document specifies new Claims derived from Command Sequence Reports and highlights existing Claims as defined in Trusted Path Routing {{-tpr}} that are applicable to the operational state of installed and updated software.
+This document specifies new Claims derived from Command Sequence Reports and relates them to Claims defined in Attestation Results for Secure Interations {{-ar4si}} -- if appiclable to the operational state of installed and updated software.
 
 The Claims defined in this document are in support of the Trusted Execution Environment Provisioning (TEEP) architecture.
-During TEEP, the current operational state of an Attester is assessed via RATS. If the corresponding Attestation Results -- as covered in this document -- indicate insufficient Trustworthiness Levels with respect to installed software, the SUIT Workflow Model is used for remediation.
+During TEEP, the current operational state of an Attester is assessed via RATS. If the corresponding Attestation Results -- as covered in this document -- indicate insufficient Trustworthiness Tiers in a Trustworthines Vector with respect to installed software, the SUIT Workflow Model is used for remediation.
 
 ## Terminology
 
 This document uses the terms and concepts defined in {{-rats}}, {{-suit}}, and {{-teep}}.
 
-{::boilerplate bcp14}
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+"MAY", and "OPTIONAL" in this document are to be interpreted as
+described in BCP 14 {{!RFC2119}} {{!RFC8174}} when, and only when, they
+appear in all capitals, as shown here.
+
 
 # Trustworthiness Vectors
 
-While there are usage scenarios where Attestation Results can be binary decisions, more often than not the assessment of trustworthiness is represented by a more fine-grained spectrum or based on multiple factors.
-These shades of Attestation Results are captured by the definition of Trustworthiness Vectors in Trusted Path Routing {{-tpr}}.
-Trustworthiness Vectors are sets of Claims representing appraisal outputs created by a Verifier. Each of these Claims is called a Trustworthiness Level.
-Multiple Trustworthiness Levels are composed into a vector.
+While there are usage scenarios where Attestation Results can be binary decisions, more often than not the assessment of trustworthiness is represented by a more fine-grained spectrum or based on multiple factors. These shades of Attestation Results are captured by the definition of Trustworthiness Vectors in Attestation Results for Secure Interaction {{-ar4si}}.
+Trustworthiness Vectors are sets of Trustworthiness Claims representing appraisal outputs produced by a Verifier (Attestation Results). Each of these Trustworthiness Claims has a Trustworthiness Tier ranging from Affirmed to None.
 
-An Attester processing SUIT Manifests can create three types of Claims about its Target Environments.
-This includes Claims about:
+An Attester processing SUIT Manifests can manages three types of information about it's Target Environments:
 
 * installed manifests including initial state (e.g. factory default),
-* hardware component identifiers that represent the targets of updates, and
-* SUIT Interpreter results (e.g. test-failed) created during updates.
+* hardware component identifiers that represent identifyable targets of updates, and
+* SUIT Interpreter results (e.g. test-failed) generated during updates.
 
 Every SUIT Manifest maps to a certain intended state of a device.
 Every intended device composition of software components associated with hardware components can therefore be expressed based on a SUIT Manifest.
 The current operational state of a device can be represented in the same form, including the initial state.
 
 As a result, the Claims defined in this document are bundled by the scope of the information represented in SUIT Manifests, i.e., dedicated blobs of software that are the payload of a SUIT Manifest.
-All Claims associated with an identifiable SUIT Manifest must always be bundled together in a Claims set that is limited to the Claims defined in this document.
+All Claims associated with an identifiable SUIT Manifest MUST always be bundled together in a Claims set that is limited to the Claims defined in this document.
 
 # SUIT Claims
 
 The Claim description in this document uses CDDL as the formal modeling language for Claims.
-This approach is derived from {{-eat}}.
+This approach is aligned with {{-eat}}.
 All Claims are based on information elements as used in the SUIT Manifest specification {{-suit}}.
-For instance, a SUIT Vendor ID is represented as an UUID.
-Analogously, the corresponding vendor-identifier Claim found below is based on a UUID. 
+For instance, a SUIT Class ID is represented as an UUID.
+Analogously, the corresponding class-identifier Claim found below is based on a UUID. 
 SUIT Claims are differentiated in:
 
 * software and hardware characteristics (System Properties), and
-* reports about updates their SUIT Commands (SUIT Records).
+* reports about updates and their SUIT Commands (SUIT Records).
+* success/failure reports
 
 Both types of Claims are always bundled in dedicated Claim Sets.
 Implementations can encode this information in various different ways (data models), e.g., sets, sequences, or nested structures.
-The following subsections define the SUIT Report Claims for RATS and are structured according to the following CDDL expression.
 
-~~~~CDDL
-suit-report = {
-  suit-system-properties => [ + system-property-claims ],
-  suit-records => [ + interpreter-record-claims ],
-}
-
-system-property-claims => { + $$system-property-claim }
-interpreter-record-claims => { + $$interpreter-record-claim }
-~~~~
+The SUIT Report is defined in {{-suit-report}}. It is used verbatim in this draft.
+The following subsections define the SUIT Report Claims for RATS.
 
 ## System Properties Claims
 
@@ -159,7 +155,9 @@ Correspondingly, the Claim definitions below highlight if a Claim is generic or 
 A RFC 4122 UUID representing the vendor of the Attester or one of its hardware and/or software components.
 
 ~~~~CDDL
-$$system-property-claim //= ( vendor-identifier => RFC4122_UUID )
+$$system-property-claim //= (vendor-identifier =>
+    (RFC4122_UUID / cbor-pen))
+cbor-pen = #6.112(bstr)
 ~~~~
 
 ### class-identifier
@@ -176,14 +174,6 @@ A RFC 4122 UUID representing the Attester.
 
 ~~~~CDDL
 $$system-property-claim //= ( device-identifier => RFC4122_UUID )
-~~~~
-
-### component-identifier
-
-A sequence of binary identifiers that is intended to identify a software-component of an Attester uniquely. A binary identifier can represent a CoSWID {{-coswid}} tag-id.
-
-~~~~CDDL
-$$system-property-claim //=  ( class-identifier => [ + identifier ] )
 ~~~~
 
 ### image-digest
@@ -203,14 +193,6 @@ The size of a firmware image on the Attester.
 $$system-property-claim //= ( image-size => size )
 ~~~~
 
-### minimum-battery
-
-The configured minimum battery level of the Attester in mWh.
-
-~~~~CDDL
-$$system-property-claim //= ( minimum-battery => charge )
-~~~~
-
 ### version
 
 The Version of a hardware or software component of the Attester.
@@ -221,7 +203,7 @@ $$system-property-claim //= ( version => version-value )
 
 ## Interpreter Record Claims
 
-This class of Claims represents the content of SUIT Records generated by Interpreters running on Recipients. They are always bundled into Claim Sets representing SUIT Reports and are intended to be included in Evidence generated by an Attester. The Interpreter Record Claims appraised by a Verifier can steer a corresponding a Firmware Appraisal procedures that consumes this Evidence. Analogously, these Claims can be re-used in generated Attestation Results as Trustworthiness Vectors {{-tpr}}.
+This class of Claims represents the content of SUIT Records generated by Interpreters running on Recipients. They are always bundled into Claim Sets representing SUIT Reports and are intended to be included in Evidence generated by an Attester. The Interpreter Record Claims appraised by a Verifier can steer a corresponding a Firmware Appraisal procedures that consumes this Evidence. Analogously, these Claims can be re-used in generated Attestation Results as Trustworthiness Vectors {{-ar4si}}.
 
 ### record-success
 
@@ -310,3 +292,4 @@ $$interpreter-record-claim //= ( actual-parameters => parameter-list )
 * Run with Arguments
 
 --- back
+
