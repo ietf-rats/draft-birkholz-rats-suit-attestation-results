@@ -88,21 +88,16 @@ The type and sequence of stages are defined by the Command Sequences included in
 For each stage in which a Command from the Command Sequence is executed a Record is created. All Records of a SUIT procedure contain binary results limited to "fail" or "pass".
 The aggregated sequence of all Records is composed into a Report.
 
-This document specifies new Claims derived from Command Sequence Reports and relates them to Claims defined in Attestation Results for Secure Interations {{-ar4si}} -- if appiclable to the operational state of installed and updated software.
+This document specifies new Claims derived from Command Sequence Reports and relates them to Claims defined in Attestation Results for Secure Interactions {{-ar4si}} -- if applicable to the operational state of installed and updated software.
 
 The Claims defined in this document are in support of the Trusted Execution Environment Provisioning (TEEP) architecture.
-During TEEP, the current operational state of an Attester is assessed via RATS. If the corresponding Attestation Results -- as covered in this document -- indicate insufficient Trustworthiness Tiers in a Trustworthines Vector with respect to installed software, the SUIT Workflow Model is used for remediation.
+During TEEP, the current operational state of an Attester is assessed via RATS. If the corresponding Attestation Results -- as covered in this document -- indicate insufficient Trustworthiness Tiers in a Trustworthiness Vector with respect to installed software, the SUIT Workflow Model is used for remediation.
 
 ## Terminology
 
 This document uses the terms and concepts defined in {{-rats}}, {{-suit}}, and {{-teep}}.
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
-NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
-"MAY", and "OPTIONAL" in this document are to be interpreted as
-described in BCP 14 {{!RFC2119}} {{!RFC8174}} when, and only when, they
-appear in all capitals, as shown here.
-
+{::boilerplate bcp14-tagged}
 
 # Trustworthiness Vectors
 
@@ -112,7 +107,7 @@ Trustworthiness Vectors are sets of Trustworthiness Claims representing appraisa
 An Attester processing SUIT Manifests can manages three types of information about it's Target Environments:
 
 * installed manifests including initial state (e.g. factory default),
-* hardware component identifiers that represent identifyable targets of updates, and
+* hardware component identifiers that represent identifiable targets of updates, and
 * SUIT Interpreter results (e.g. test-failed) generated during updates.
 
 Every SUIT Manifest maps to a certain intended state of a device.
